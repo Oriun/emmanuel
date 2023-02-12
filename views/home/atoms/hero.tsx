@@ -1,10 +1,14 @@
 import Emoji, { EmojiAnimation } from "@/components/emoji";
 import IsWriting from "@/components/is-writing";
-import React from "react";
+import React, { useCallback } from "react";
 import cx from "clsx";
 import font from "@/styles/font.module.scss";
 import styles from "../home.module.scss";
 import Button from "@/components/button";
+import useOpacity from "@/hooks/useOpacity";
+import useSize from "@/hooks/useSize";
+import mergeRef from "@/utils/mergeRef";
+
 const messagesElements = [
   <p className={font.big_title} key="first">
     Salut !{" "}
@@ -72,32 +76,38 @@ const Hero = () => {
   const [index, setIndex] = React.useState(0);
   const [isWriting, setIsWriting] = React.useState(true);
   const [messages, setMessages] = React.useState<typeof messagesElements>([]);
-  const [opacity, setOpacity] = React.useState("1");
   const [hasEnded, setHasEnded] = React.useState(false);
+  const [opacity, opacityRef] = useOpacity();
   const lastMessage = React.useRef<HTMLElement>(null);
-  const heroRef = React.useRef<HTMLDivElement>(null);
+  const [{ height }, sizeRef] = useSize();
 
-  React.useEffect(() => {
-    if (!heroRef.current) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setOpacity((entry.intersectionRatio ** 2).toFixed(2));
-      },
-      { threshold: Array.from({ length: 100 }, (_, i) => i / 100) }
-    );
-    observer.observe(heroRef.current);
-    return () => observer.disconnect();
-  }, [opacity]);
+  const next = React.useCallback(() => {
+    setMessages((prev) => [messagesElements[index], ...prev]);
+    setIndex((prev) => prev + 1);
+    setHasEnded(false);
+  }, [index]);
 
   React.useEffect(() => {
     if (index === messagesElements.length) return;
-    const timeout = setTimeout(() => {
-      setMessages((prev) => [messagesElements[index], ...prev]);
-      setIndex((prev) => prev + 1);
-      setHasEnded(false);
-    }, delays[index]);
+    const timeout = setTimeout(next, delays[index]);
     return () => clearTimeout(timeout);
-  }, [index]);
+  }, [index, next]);
+
+  React.useEffect(() => {
+    if (index === messagesElements.length || parseFloat(opacity) <= 0.9) return;
+    function skip(e: KeyboardEvent) {
+      if (e.key === " " || e.key === "Enter") {
+        e.preventDefault();
+        e.stopPropagation();
+        next();
+      }
+    }
+    window.addEventListener("keydown", skip, {
+      once: true,
+      capture: true,
+    });
+    return () => window.removeEventListener("keydown", skip, { capture: true });
+  }, [index, opacity, next]);
 
   React.useEffect(() => {
     if (index >= messagesElements.length - 2) {
@@ -143,34 +153,13 @@ const Hero = () => {
     }
   }, [messages]);
 
-  React.useEffect(() => {
-    if (index === messagesElements.length || parseFloat(opacity) <= 0.9) return;
-    function skip(e: KeyboardEvent) {
-      if (e.key === " " || e.key === "Enter") {
-        e.preventDefault();
-        e.stopPropagation();
-        setMessages((prev) => [messagesElements[index], ...prev]);
-        setIndex((prev) => prev + 1);
-        setHasEnded(false);
-        return false;
-      }
-    }
-    window.addEventListener("keydown", skip, {
-      once: true,
-      capture: true,
-    });
-    return () => window.removeEventListener("keydown", skip, { capture: true });
-  }, [index, opacity]);
-
-  const blocHeight = "window" in global ? window.innerHeight : 1_080;
-
   return (
     <article
-      ref={heroRef}
+      ref={mergeRef(opacityRef, sizeRef)}
       className={styles.hero}
       style={{
         maskImage: `-webkit-gradient(linear, center top, center bottom, color-stop(0, #0000), color-stop(${(
-          150 /*px*/ / blocHeight
+          150 /*px*/ / height
         ).toFixed(2)}, #000f))`,
         opacity,
       }}

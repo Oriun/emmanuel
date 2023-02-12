@@ -15,8 +15,13 @@
   }
 
   .top_control {
-    position: absolute;
-    top: 32px;
+    position: fixed;
+    top: -100px;
+    transition-property: top;
+    transition-duration: 0.4s;
+    &.fixed {
+      top: 32px;
+    }
   }
 
   .bottom_controls {

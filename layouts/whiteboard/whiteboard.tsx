@@ -39,10 +39,16 @@ const Whiteboard: React.FC<WhiteboardProps> = ({ className, children }) => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         tabs={tabs}
-        className={cx(styles.control, styles.top_control, styles.nav)}
+        className={cx(
+          styles.control,
+          styles.top_control,
+          styles.nav,
+          fixed && styles.fixed
+        )}
         ref={switchRef}
         style={{
           left: `calc(50vw - ${switchSize.width / 2}px)`,
+          opacity: switchSize.width ? 1 : 0,
         }}
       />
       {children}
