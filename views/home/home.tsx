@@ -10,6 +10,8 @@ const Home: React.FC = () => {
     <>
       <Whiteboard className={styles.whiteboard}>
         <Hero />
+        <Hero />
+        <Hero />
       </Whiteboard>
     </>
   );

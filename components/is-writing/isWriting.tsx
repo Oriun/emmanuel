@@ -41,7 +41,6 @@ const IsWriting: React.FC<IsWritingProps> = ({
         amplitude={0.5}
         speed={1.4}
       />
-      ,
       {skippable && (
         <span style={{ marginLeft: 12 }}>
           Press <b>space</b> to skip

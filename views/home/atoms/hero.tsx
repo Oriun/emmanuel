@@ -144,21 +144,23 @@ const Hero = () => {
   }, [messages]);
 
   React.useEffect(() => {
-    if (index === messagesElements.length) return;
+    if (index === messagesElements.length || parseFloat(opacity) <= 0.9) return;
     function skip(e: KeyboardEvent) {
       if (e.key === " " || e.key === "Enter") {
+        e.preventDefault();
+        e.stopPropagation();
         setMessages((prev) => [messagesElements[index], ...prev]);
         setIndex((prev) => prev + 1);
         setHasEnded(false);
+        return false;
       }
     }
     window.addEventListener("keydown", skip, {
       once: true,
-      passive: true,
       capture: true,
     });
     return () => window.removeEventListener("keydown", skip, { capture: true });
-  }, [index]);
+  }, [index, opacity]);
 
   const blocHeight = "window" in global ? window.innerHeight : 1_080;
 
@@ -186,6 +188,7 @@ const Hero = () => {
         {isWriting ? (
           <IsWriting className={styles.writing} name="Emmanuel" skippable />
         ) : null}
+        {opacity}
       </div>
     </article>
   );
