@@ -62,7 +62,16 @@ const Emoji: React.FC<EmojiProps> = ({
         setInteractions({});
       }
     }
-  }, [event, loop, animationFunction, playOnRender, ref]);
+  }, [
+    event,
+    loop,
+    animationFunction,
+    playOnRender,
+    ref,
+    speed,
+    amplitude,
+    delay,
+  ]);
 
   return (
     <span {...interactions} className={cx(styles.emoji, className)} ref={ref}>
