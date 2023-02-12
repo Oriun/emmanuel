@@ -4,9 +4,14 @@ import Emoji, { EmojiAnimation } from "../emoji";
 export type IsWritingProps = {
   className?: string;
   name: string;
+  skippable?: boolean;
 };
 
-const IsWriting: React.FC<IsWritingProps> = ({ className, name }) => {
+const IsWriting: React.FC<IsWritingProps> = ({
+  className,
+  name,
+  skippable,
+}) => {
   return (
     <span className={className}>
       <b>{name}</b> is writing{" "}
@@ -36,6 +41,12 @@ const IsWriting: React.FC<IsWritingProps> = ({ className, name }) => {
         amplitude={0.5}
         speed={1.4}
       />
+      ,
+      {skippable && (
+        <span style={{ marginLeft: 12 }}>
+          Press <b>space</b> to skip
+        </span>
+      )}
     </span>
   );
 };

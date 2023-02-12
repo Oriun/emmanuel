@@ -56,6 +56,13 @@ const messagesElements = [
     }
   >
     Voir mon travail
+    <Emoji
+      content="👇"
+      animation={EmojiAnimation.float}
+      loop
+      playOnRender
+      className={styles.button_emoji}
+    />
   </Button>,
 ];
 
@@ -93,10 +100,10 @@ const Hero = () => {
   }, [index]);
 
   React.useEffect(() => {
-    if (index === messagesElements.length - 2) {
+    if (index >= messagesElements.length - 2) {
       const timeout = setTimeout(() => {
         setIsWriting(false);
-      }, delays[index] - 200);
+      }, (delays[index] ?? 200) - 200);
       return () => clearTimeout(timeout);
     }
   }, [index]);
@@ -117,8 +124,7 @@ const Hero = () => {
       // (ratio + 1) * b = 1
       // b = 1 / (ratio + 1)
       const offset = 1 / (ratio + 1);
-      console.log([0, offset, 1]);
-      message.parentElement!.animate(
+      const animation = message.parentElement!.animate(
         [
           { height: 0, marginTop: -64, offset: 0 },
           { height: 0, marginTop: 0, offset },
@@ -129,13 +135,31 @@ const Hero = () => {
           fill: "forwards",
           easing: "ease-in-out",
         }
-      ).onfinish = () => {
+      );
+      animation.onfinish = () => {
         setHasEnded(true);
       };
+      return () => animation.cancel();
     }
   }, [messages]);
 
-  React.useEffect;
+  React.useEffect(() => {
+    if (index === messagesElements.length) return;
+    function skip(e: KeyboardEvent) {
+      if (e.key === " " || e.key === "Enter") {
+        setMessages((prev) => [messagesElements[index], ...prev]);
+        setIndex((prev) => prev + 1);
+        setHasEnded(false);
+      }
+    }
+    window.addEventListener("keydown", skip, {
+      once: true,
+      passive: true,
+      capture: true,
+    });
+    return () => window.removeEventListener("keydown", skip, { capture: true });
+  }, [index]);
+
   const blocHeight = "window" in global ? window.innerHeight : 1_080;
 
   return (
@@ -151,16 +175,16 @@ const Hero = () => {
     >
       <div className={styles.hero_content}>
         {messages.length ? (
-          <p key={messages[0].key} className={cx(!hasEnded && styles.last)}>
+          <div key={messages[0].key} className={cx(!hasEnded && styles.last)}>
             {React.cloneElement(messages[0], {
               ref: lastMessage,
             })}
-          </p>
+          </div>
         ) : null}
         {messages.slice(1)}
 
         {isWriting ? (
-          <IsWriting className={styles.writing} name="Emmanuel" />
+          <IsWriting className={styles.writing} name="Emmanuel" skippable />
         ) : null}
       </div>
     </article>

@@ -54,7 +54,6 @@ export default function wave(
   const animation = new Animation(frames, document.timeline);
   return {
     play() {
-      console.log("play");
       animation.cancel();
       animation.play();
     },

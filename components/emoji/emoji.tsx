@@ -57,7 +57,6 @@ const Emoji: React.FC<EmojiProps> = ({
         }
         if (playOnRender) setTimeout(() => selectedAnimation.play(), delay);
       } else {
-        console.log("playMode", playMode);
         setTimeout(() => selectedAnimation[playMode](), delay);
         setInteractions({});
       }

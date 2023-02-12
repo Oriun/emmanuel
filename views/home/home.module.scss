@@ -3,6 +3,10 @@
   width: 100vw;
   color: var(--black);
 }
+.button_emoji {
+  cursor: pointer;
+  margin-left: 8px;
+}
 .hero {
   height: 100vh;
   padding: 100px var(--margin) 200px;
