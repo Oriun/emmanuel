@@ -10,8 +10,14 @@
   cursor: pointer;
   border-radius: 28px;
   background-color: #751a75;
+  box-shadow: #751a7550 0px 8px 16px 0px;
   font-size: 16px;
   font-family: var(--lexend);
   color: white;
   opacity: 1;
+  transition-duration: 0.2s;
+  &:hover {
+    box-shadow: #881a889b 0px 0px 24px 10px;
+    transform: scale(0.93);
+  }
 }

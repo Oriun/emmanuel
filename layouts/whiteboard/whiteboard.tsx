@@ -52,9 +52,7 @@ const Whiteboard: React.FC<WhiteboardProps> = ({ className, children }) => {
           styles.control,
           fixed && styles.fixed
         )}
-      >
-        Controls
-      </div>
+      ></div>
       <div className={styles.stop_mark} ref={stopMarkRef} />
     </section>
   );

@@ -65,12 +65,13 @@ const Hero = () => {
   const [index, setIndex] = React.useState(0);
   const [isWriting, setIsWriting] = React.useState(true);
   const [messages, setMessages] = React.useState<typeof messagesElements>([]);
-  const lastMessage = React.useRef<HTMLElement>(null);
   const [opacity, setOpacity] = React.useState("1");
+  const [hasEnded, setHasEnded] = React.useState(false);
+  const lastMessage = React.useRef<HTMLElement>(null);
   const heroRef = React.useRef<HTMLDivElement>(null);
+
   React.useEffect(() => {
     if (!heroRef.current) return;
-    console.log({ opacity });
     const observer = new IntersectionObserver(
       ([entry]) => {
         setOpacity((entry.intersectionRatio ** 2).toFixed(2));
@@ -86,6 +87,7 @@ const Hero = () => {
     const timeout = setTimeout(() => {
       setMessages((prev) => [messagesElements[index], ...prev]);
       setIndex((prev) => prev + 1);
+      setHasEnded(false);
     }, delays[index]);
     return () => clearTimeout(timeout);
   }, [index]);
@@ -127,9 +129,13 @@ const Hero = () => {
           fill: "forwards",
           easing: "ease-in-out",
         }
-      );
+      ).onfinish = () => {
+        setHasEnded(true);
+      };
     }
   }, [messages]);
+
+  React.useEffect;
   const blocHeight = "window" in global ? window.innerHeight : 1_080;
 
   return (
@@ -143,10 +149,9 @@ const Hero = () => {
         opacity,
       }}
     >
-      {/* <div className={styles.fader} /> */}
       <div className={styles.hero_content}>
         {messages.length ? (
-          <p key={messages[0].key} className={styles.last}>
+          <p key={messages[0].key} className={cx(!hasEnded && styles.last)}>
             {React.cloneElement(messages[0], {
               ref: lastMessage,
             })}
