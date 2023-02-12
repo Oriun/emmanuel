@@ -1,0 +1,17 @@
+.button {
+  border: none;
+  outline: none;
+  height: 56px;
+  min-width: 200px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 28px;
+  background-color: #751a75;
+  font-size: 16px;
+  font-family: var(--lexend);
+  color: white;
+  opacity: 1;
+}

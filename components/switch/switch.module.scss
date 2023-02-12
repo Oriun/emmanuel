@@ -1,0 +1,47 @@
+.switch_container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 24px 48px 8px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 1;
+  --padding: 6px;
+  padding: var(--padding);
+  width: min-content;
+  border-radius: 30px;
+  height: 60px;
+
+  .switch_selected {
+    border-radius: 24px;
+    position: absolute;
+    top: var(--padding);
+    left: var(--padding);
+    bottom: var(--padding);
+    z-index: 1;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 16px 0px;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .switch_tabs {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    width: min-content;
+    height: 100%;
+    .switch_tab {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0 20px;
+      min-width: max-content;
+      user-select: none;
+    }
+  }
+}

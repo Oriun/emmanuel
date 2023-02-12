@@ -1,4 +1,59 @@
 .whiteboard {
   min-height: 100vh;
   width: 100vw;
+  color: var(--black);
+}
+.hero {
+  height: 100vh;
+  padding: 100px var(--margin) 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: visible;
+  position: relative;
+  // mask-image: -webkit-gradient(
+  //   linear,
+  //   center top,
+  //   center bottom,
+  //   color-stop(0, rgba(0, 0, 0, 0)),
+  //   color-stop(0.3, rgba(0, 0, 0, 1))
+  // );
+  // .fader {
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   width: 100%;
+  //   height: 120px;
+  //   background: linear-gradient(
+  //     180deg,
+  //     rgba(255, 255, 255, 0) 0%,
+  //     #ffffff 100%
+  //   );
+  //   pointer-events: none;
+  // }
+  .hero_content {
+    height: fit-content;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    position: relative;
+    gap: 64px;
+    .text {
+      max-width: 55%;
+    }
+    .writing {
+      position: absolute;
+      bottom: -24px;
+      opacity: 0.6;
+      font-weight: 500;
+      font-size: 14px;
+      font-style: italic;
+      b {
+        font-weight: 600;
+      }
+    }
+    .last {
+      overflow: hidden;
+    }
+  }
 }
