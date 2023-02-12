@@ -26,24 +26,18 @@ const Button: React.ForwardRefRenderFunction<
   },
   ref
 ) => {
-  const Component = React.useMemo(() => {
-    if (link) {
-      return "a";
-    }
-    return "button";
-  }, [link]);
-  return (
-    <Component
-      className={cx(styles.button, className)}
-      style={style}
-      href={link}
-      onClick={onClick}
-      disabled={disabled}
-      type={type}
-      ref={ref}
-    >
-      {children}
-    </Component>
+  return React.createElement(
+    link ? "a" : "button",
+    {
+      className: cx(styles.button, className),
+      style: style,
+      href: link,
+      onClick: onClick,
+      disabled: disabled,
+      type: type,
+      ref: ref,
+    },
+    children
   );
 };
 

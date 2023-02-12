@@ -55,9 +55,9 @@ const messagesElements = [
   </p>,
   <Button
     key="fifth"
-    onClick={() =>
-      window.scrollBy({ behavior: "smooth", top: window.innerHeight })
-    }
+    onClick={() => {
+      window.scrollBy({ behavior: "smooth", top: window.innerHeight });
+    }}
   >
     Voir mon travail
     <Emoji
@@ -177,7 +177,6 @@ const Hero = () => {
         {isWriting ? (
           <IsWriting className={styles.writing} name="Emmanuel" skippable />
         ) : null}
-        {opacity}
       </div>
     </article>
   );
