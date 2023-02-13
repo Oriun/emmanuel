@@ -3,8 +3,7 @@ import styles from "./whiteboard.module.scss";
 import cx from "clsx";
 import Switch, { useSwitch } from "@/components/switch";
 import useSize from "@/hooks/useSize";
-import Restart from "@/assets/restart";
-import Emoji, { EmojiAnimation } from "@/components/emoji";
+import RestartButton from "@/components/restart/restart";
 
 export type WhiteboardProps = {
   className?: string | Record<string, boolean>;
@@ -52,23 +51,13 @@ const Whiteboard: React.FC<WhiteboardProps> = ({ className, children }) => {
           opacity: switchSize.width ? 1 : 0,
         }}
       />
-      <div
+      <RestartButton
         className={cx(
           styles.control,
           styles.top_control,
-          styles.restart,
           fixed && styles.fixed
         )}
-        onClick={() => {
-          window.location.reload();
-        }}
-      >
-        <Emoji
-          animation={EmojiAnimation.rotate}
-          content={<Restart />}
-          event="whileHover"
-        />
-      </div>
+      />
       {children}
       <div
         className={cx(
