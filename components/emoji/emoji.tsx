@@ -4,7 +4,7 @@ import styles from "./emoji.module.scss";
 import Animations, { EmojiAnimation, EmojiFunction } from "./fn";
 
 export type EmojiProps = {
-  content: string;
+  content: React.ReactNode;
   loop?: boolean;
   event?: "onClick" | "onMouseEnter" | "onMouseLeave" | "whileHover";
   animation: EmojiAnimation;

@@ -1,6 +1,7 @@
 import wave from "./wave";
 import float from "./float";
 import shout from "./shout";
+import rotate from "./rotate";
 
 export type EmojiFunctionOptions = {
   speed?: number;
@@ -19,12 +20,14 @@ export const enum EmojiAnimation {
   wave = "wave",
   float = "float",
   shout = "shout",
+  rotate = "rotate",
 }
 
 const Animations: Record<EmojiAnimation, EmojiFunction> = {
   [EmojiAnimation.wave]: wave,
   [EmojiAnimation.float]: float,
   [EmojiAnimation.shout]: shout,
+  [EmojiAnimation.rotate]: rotate,
 };
 
 export default Animations;
