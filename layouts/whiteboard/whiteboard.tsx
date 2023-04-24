@@ -8,9 +8,14 @@ import RestartButton from "@/components/restart/restart";
 export type WhiteboardProps = {
   className?: string | Record<string, boolean>;
   children?: React.ReactNode | React.ReactNode[];
+  bottom?: React.ReactNode | React.ReactNode[];
 };
 
-const Whiteboard: React.FC<WhiteboardProps> = ({ className, children }) => {
+const Whiteboard: React.FC<WhiteboardProps> = ({
+  className,
+  children,
+  bottom,
+}) => {
   const [fixed, setFixed] = React.useState(true);
   const stopMarkRef = React.useRef<HTMLDivElement>(null);
   const [switchSize, switchRef] = useSize();
@@ -65,7 +70,9 @@ const Whiteboard: React.FC<WhiteboardProps> = ({ className, children }) => {
           styles.control,
           fixed && styles.fixed
         )}
-      ></div>
+      >
+        {bottom}
+      </div>
       <div className={styles.stop_mark} ref={stopMarkRef} />
     </section>
   );
