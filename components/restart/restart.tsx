@@ -19,6 +19,7 @@ const RestartButton: React.FC<RestartButtonProps> = ({ className }) => {
       <Emoji
         animation={EmojiAnimation.rotate}
         content={<Restart />}
+        amplitude={10}
         event="whileHover"
         className={styles.restart_icon}
       />

@@ -52,7 +52,8 @@ export const messagesElements = [
   <Button
     key="fifth"
     onClick={() => {
-      window.scrollBy({ behavior: "smooth", top: window.innerHeight });
+      console.log("click");
+      document.body.scrollBy({ behavior: "smooth", top: window.innerHeight });
     }}
   >
     Voir mon travail

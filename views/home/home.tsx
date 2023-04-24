@@ -1,17 +1,16 @@
 import React from "react";
 import styles from "./home.module.scss";
-import useTranslation from "next-translate/useTranslation";
 import Whiteboard from "@/layouts/whiteboard";
 import Hero from "./atoms/hero";
 
 const Home: React.FC = () => {
-  const translate = useTranslation();
+  const [sections, setSections] = React.useState<React.FC[]>([Hero]);
   return (
-    <>
-      <Whiteboard className={styles.whiteboard}>
-        <Hero />
-      </Whiteboard>
-    </>
+    <Whiteboard className={styles.whiteboard}>
+      {sections.map((Section, index) => (
+        <Section key={index} />
+      ))}
+    </Whiteboard>
   );
 };
 

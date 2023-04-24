@@ -26,7 +26,10 @@ const Hero = () => {
   }, [index]);
 
   React.useEffect(() => {
-    if (index === messagesElements.length) return;
+    if (index === messagesElements.length) {
+      sessionStorage.setItem("skip_hero", "true");
+      return;
+    }
     const timeout = setTimeout(next, messagesDelays[index]);
     return () => clearTimeout(timeout);
   }, [index, next]);
@@ -90,6 +93,7 @@ const Hero = () => {
       return () => animation.cancel();
     }
   }, [messages]);
+  console.log({ index });
 
   return (
     <article

@@ -29,7 +29,8 @@ const Whiteboard: React.FC<WhiteboardProps> = ({
       const isVisible = entry.intersectionRatio !== 0;
       const isAbove = entry.boundingClientRect.top < 0;
       const shouldBeFixed = !isVisible && !isAbove;
-      if (shouldBeFixed !== fixed) setFixed(shouldBeFixed);
+      if (shouldBeFixed !== fixed)
+        requestAnimationFrame(() => setFixed(shouldBeFixed));
     });
     if (stopMarkRef.current) {
       observer.observe(stopMarkRef.current);
@@ -40,7 +41,7 @@ const Whiteboard: React.FC<WhiteboardProps> = ({
   }, [fixed]);
 
   return (
-    <section className={cx(styles.container, className)}>
+    <section className={cx(styles.container, className)} id="main">
       <Switch
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -64,15 +65,17 @@ const Whiteboard: React.FC<WhiteboardProps> = ({
         )}
       />
       {children}
-      <div
-        className={cx(
-          styles.bottom_controls,
-          styles.control,
-          fixed && styles.fixed
-        )}
-      >
-        {bottom}
-      </div>
+      {bottom ? (
+        <div
+          className={cx(
+            styles.bottom_controls,
+            styles.control,
+            fixed && styles.fixed
+          )}
+        >
+          {bottom}
+        </div>
+      ) : null}
       <div className={styles.stop_mark} ref={stopMarkRef} />
     </section>
   );
